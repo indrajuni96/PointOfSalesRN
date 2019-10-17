@@ -7,9 +7,6 @@ import {
   Image
 } from 'react-native'
 import {
-  Footer,
-  FooterTab,
-  Button,
   Icon,
   Text,
   Item,
@@ -18,14 +15,58 @@ import {
   CardItem,
   Body
 } from 'native-base';
-import iconCake from '../Assets/Images/cake.png'
-import iconCoffee from '../Assets/Images/coffee.png'
-import iconWater from '../Assets/Images/water.png'
-import iconDoughnut from '../Assets/Images/doughnut.png'
-import iconPizza from '../Assets/Images/pizza.png'
-import iconUnyil from '../Assets/Images/uyil.png'
+import Footers from '../Components/Footers'
+import CardCategory from '../Components/CardCategory'
+import CardItems from '../Components/CardItems'
+import axios from 'axios';
+import { connect } from "react-redux";
+import { getHome } from "../public/redux/Actions/Home";
 
-export default class Home extends Component {
+class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      search: '',
+      byProduct: 'idProduct',
+      sort: 'asc',
+      page: '1',
+    }
+  }
+
+  async componentDidMount() {
+    await this.getAll(
+      this.state.search,
+      this.state.byProduct,
+      this.state.sort,
+      this.state.page)
+  }
+
+  getAll = async (search, byProduct, sort, page) => {
+    const result = await this.props.dispatch(
+      getHome({
+        search: this.state.search,
+        sort: this.state.sort,
+        order: this.state.byProduct,
+        page: this.state.page
+      })
+    );
+
+    this.setState({
+      data: result.value.data.data,
+      totalPages: result.value.data.total_pages
+    });
+    console.log(result)
+    // await axios.get('http://10.0.2.2:4000/api/v1/products')
+    //   .then(result => {
+    //     this.setState({ data: result.data.data })
+    //   })
+    // console.log(this.state.data)
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
+  }
+
   render() {
     return (
       <>
@@ -41,246 +82,20 @@ export default class Home extends Component {
                 <View>
                   <Item rounded style={styles.inputSearch}>
                     <Icon active name='search' />
-                    <Input placeholder='Search' />
+                    <Input placeholder='Search'
+                      value={this.state.search} onChangeText={this.getSearch} />
                   </Item>
                 </View>
               </View>
               <View style={styles.containerContent}>
-                <SafeAreaView style={styles.scrollViewItems}>
-                  <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}>
-                    <View style={styles.contentKategori}>
-                      <View style={styles.cardItmeKategori}>
-                        <View style={styles.contentKategoriIcon}>
-                          <Image style={styles.logo} source={iconCoffee} />
-                        </View>
-                        <View>
-                          <Text style={styles.logoText}>Coffee</Text>
-                        </View>
-                      </View>
-                      <View style={styles.cardItmeKategori}>
-                        <View style={styles.contentKategoriIcon}>
-                          <Image style={styles.logo} source={iconCake} />
-                        </View>
-                        <View>
-                          <Text style={styles.logoText}>Cake</Text>
-                        </View>
-                      </View>
-                      <View style={styles.cardItmeKategori}>
-                        <View style={styles.contentKategoriIcon}>
-                          <Image style={styles.logo} source={iconWater} />
-                        </View>
-                        <View>
-                          <Text style={styles.logoText}>Water</Text>
-                        </View>
-                      </View>
-                      <View style={styles.cardItmeKategori}>
-                        <View style={styles.contentKategoriIcon}>
-                          <Image style={styles.logo} source={iconDoughnut} />
-                        </View>
-                        <View>
-                          <Text style={styles.logoText}>Doughnut</Text>
-                        </View>
-                      </View>
-                      <View style={styles.cardItmeKategori}>
-                        <View style={styles.contentKategoriIcon}>
-                          <Image style={styles.logo} source={iconPizza} />
-                        </View>
-                        <View>
-                          <Text style={styles.logoText}>Pizza</Text>
-                        </View>
-                      </View>
-                      <View style={styles.cardItmeKategori}>
-                        <View style={styles.contentKategoriIcon}>
-                          <Image style={styles.logo} source={iconUnyil} />
-                        </View>
-                        <View>
-                          <Text style={styles.logoText}>Unyil</Text>
-                        </View>
-                      </View>
-                    </View>
-                  </ScrollView>
-                </SafeAreaView>
-                <Text style={styles.textFavorite}>
-                  Favorite
-                </Text>
-                <SafeAreaView style={styles.scrollViewItems}>
-                  <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}>
-                    <Card style={styles.cardItems}>
-                      <CardItem cardBody>
-                        <Image
-                          source={require('../Assets/Images/cappucino.png')}
-                          style={{ height: 100, width: 200, flex: 1 }} />
-                      </CardItem>
-                      <CardItem>
-                        <Body>
-                          <Text>
-                            Cappucino
-                          </Text>
-                        </Body>
-                      </CardItem>
-                    </Card>
-                    <Card style={styles.cardItems}>
-                      <CardItem cardBody>
-                        <Image
-                          source={require('../Assets/Images/cappucino.png')}
-                          style={{ height: 100, width: 200, flex: 1 }} />
-                      </CardItem>
-                      <CardItem>
-                        <Body>
-                          <Text>
-                            Cappucino
-                          </Text>
-                        </Body>
-                      </CardItem>
-                    </Card>
-                    <Card style={styles.cardItems}>
-                      <CardItem cardBody>
-                        <Image
-                          source={require('../Assets/Images/cappucino.png')}
-                          style={{ height: 100, width: 200, flex: 1 }} />
-                      </CardItem>
-                      <CardItem>
-                        <Body>
-                          <Text>
-                            Cappucino
-                          </Text>
-                        </Body>
-                      </CardItem>
-                    </Card>
-                    <Card style={styles.cardItems}>
-                      <CardItem cardBody>
-                        <Image
-                          source={require('../Assets/Images/cappucino.png')}
-                          style={{ height: 100, width: 200, flex: 1 }} />
-                      </CardItem>
-                      <CardItem>
-                        <Body>
-                          <Text>
-                            Cappucino
-                          </Text>
-                        </Body>
-                      </CardItem>
-                    </Card>
-                    <Card style={styles.cardItems}>
-                      <CardItem cardBody>
-                        <Image
-                          source={require('../Assets/Images/cappucino.png')}
-                          style={{ height: 100, width: 200, flex: 1 }} />
-                      </CardItem>
-                      <CardItem>
-                        <Body>
-                          <Text>
-                            Cappucino
-                          </Text>
-                        </Body>
-                      </CardItem>
-                    </Card>
-                  </ScrollView>
-                </SafeAreaView>
-                <View style={styles.contentItems}>
-                  <Card style={styles.cardItems}>
-                    <CardItem cardBody>
-                      <Image
-                        source={require('../Assets/Images/cappucino.png')}
-                        style={{ height: 100, width: 200, flex: 1 }} />
-                    </CardItem>
-                    <CardItem>
-                      <Body>
-                        <Text>
-                          Cappucino
-                          </Text>
-                      </Body>
-                    </CardItem>
-                  </Card>
-                  <Card style={styles.cardItems}>
-                    <CardItem cardBody>
-                      <Image
-                        source={require('../Assets/Images/cappucino.png')}
-                        style={{ height: 100, width: 200, flex: 1 }} />
-                    </CardItem>
-                    <CardItem>
-                      <Body>
-                        <Text>
-                          Cappucino
-                          </Text>
-                      </Body>
-                    </CardItem>
-                  </Card>
-                  <Card style={styles.cardItems}>
-                    <CardItem cardBody>
-                      <Image
-                        source={require('../Assets/Images/cappucino.png')}
-                        style={{ height: 100, width: 200, flex: 1 }} />
-                    </CardItem>
-                    <CardItem>
-                      <Body>
-                        <Text>
-                          Cappucino
-                          </Text>
-                      </Body>
-                    </CardItem>
-                  </Card>
-                  <Card style={styles.cardItems}>
-                    <CardItem cardBody>
-                      <Image
-                        source={require('../Assets/Images/cappucino.png')}
-                        style={{ height: 100, width: 200, flex: 1 }} />
-                    </CardItem>
-                    <CardItem>
-                      <Body>
-                        <Text>
-                          Cappucino
-                          </Text>
-                      </Body>
-                    </CardItem>
-                  </Card>
-                  <Card style={styles.cardItems}>
-                    <CardItem cardBody>
-                      <Image
-                        source={require('../Assets/Images/cappucino.png')}
-                        style={{ height: 100, width: 200, flex: 1 }} />
-                    </CardItem>
-                    <CardItem>
-                      <Body>
-                        <Text>
-                          Cappucino
-                          </Text>
-                      </Body>
-                    </CardItem>
-                  </Card>
-                </View>
-
+                <CardCategory />
+                <CardItems
+                  data={this.state.data}
+                />
               </View>
             </ScrollView>
           </SafeAreaView>
-          <Footer >
-            <FooterTab style={{ backgroundColor: '#dfe4ea' }}>
-              <Button vertical>
-                <Icon name="apps" style={{ color: '#192a56' }} />
-                <Text style={{ color: '#192a56' }}>Home</Text>
-              </Button>
-              <Button vertical>
-                <Icon name="cart" style={{ color: '#192a56' }} />
-                <Text style={{ color: '#192a56' }}>Cart</Text>
-              </Button>
-              <Button vertical>
-                <Icon name="podium" style={{ color: '#192a56' }} />
-                <Text style={{ color: '#192a56' }}>History</Text>
-              </Button>
-              <Button vertical>
-                <Icon name="settings" style={{ color: '#192a56' }} />
-                <Text
-                  onPress={() => navigation.navigate('Login')}
-                  style={{ color: '#192a56' }}>
-                  Options
-                </Text>
-              </Button>
-            </FooterTab>
-          </Footer>
+          <Footers navigate={this.props.navigation.navigate} />
         </View>
       </>
     );
@@ -319,7 +134,7 @@ const styles = StyleSheet.create({
     color: '#ffff'
   },
   containerContent: {
-    height: 700,
+    height: 750,
     backgroundColor: '#ffff',
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
@@ -345,32 +160,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold'
   },
-  contentKategori: {
-    flexDirection: 'row',
-    height: 130,
-    padding: 10,
-    alignItems: 'center'
-  },
-  cardItmeKategori: {
-    height: 75,
-    width: 75,
-    alignItems: 'center',
-    marginRight: 5
-  },
-  contentKategoriIcon: {
-    height: 70,
-    borderRadius: 20,
-    backgroundColor: '#dfe4ea',
-    padding: 5
-  },
-  logo: {
-    width: 60,
-    height: 60,
-  },
-  logoText: {
-    color: '#192a56',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center'
-  }
 })
+const mapStateToProps = state => {
+  return {
+    data: state.Home
+  }
+}
+
+export default connect(mapStateToProps)(Home)

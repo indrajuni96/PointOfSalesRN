@@ -4,15 +4,54 @@ import {
   View,
   Text,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ToastAndroid
 } from 'react-native'
 import {
   Form,
   Item,
   Input
 } from 'native-base'
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
 export default class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: '',
+      email: '',
+      password: ''
+    }
+  }
+
+  loginHandler = async () => {
+    const { email, password } = this.state;
+    const url = 'http://10.0.2.2:4000/users/login';
+    const payload = {
+      email,
+      password,
+    };
+    await axios
+      .post(url, payload)
+      .then(response => {
+        AsyncStorage.multiSet([
+          ['email', email],
+          ['token', response.data.data.token],
+        ]);
+        this.props.navigation.navigate('Home');
+      })
+      .catch(error => {
+        ToastAndroid.showWithGravityAndOffset(
+          'Invalid email/Password!',
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          50,
+        );
+      });
+  };
+
   render() {
     return (
       <>
@@ -24,17 +63,28 @@ export default class Login extends Component {
           <View style={styles.containerFormLogin}>
             <View style={styles.formLogin}>
               <Form>
-                <Item style={styles.formInput} last>
-                  <Input placeholder="Email" />
+                <Item
+                  style={styles.formInput}
+                  last>
+                  <Input
+                    placeholder="Email"
+                    value={this.state.email}
+                    onChangeText={text => this.setState({ email: text })}
+                  />
                 </Item>
-                <Item style={styles.formInput} last>
+                <Item
+                  style={styles.formInput}
+                  last>
                   <Input
                     placeholder="Password"
-                    secureTextEntry />
+                    secureTextEntry
+                    value={this.state.password}
+                    onChangeText={text => this.setState({ password: text })}
+                  />
                 </Item>
                 <TouchableOpacity
                   style={styles.buttonLogin}
-                  onPress={() => this.props.navigation.navigate('NotFound')}>
+                  onPress={this.loginHandler}>
                   <Text style={styles.buttonLoginText}>LOGIN</Text>
                 </TouchableOpacity>
               </Form>

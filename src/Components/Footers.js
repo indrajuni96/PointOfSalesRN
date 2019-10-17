@@ -1,63 +1,40 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  View
-} from 'react-native'
-import {
-  Container,
-  Content,
   Footer,
   FooterTab,
   Button,
   Icon,
-  Text,
-  Item,
-  Input
+  Text
 } from 'native-base';
 
 export default class Footers extends Component {
   render() {
     return (
       <>
-        <Container>
-          <View style={styles.inputSearch}>
-            <Item rounded>
-              <Icon active name='search' />
-              <Input placeholder='Search product...' />
-            </Item>
-          </View>
-          <Content />
-          <Footer>
-            <FooterTab>
-              <Button vertical>
-                <Icon name="apps" />
-                <Text>Home</Text>
-              </Button>
-              <Button vertical>
-                <Icon name="cart" />
-                <Text>Cart</Text>
-              </Button>
-              <Button vertical>
-                <Icon name="podium" />
-                <Text>History</Text>
-              </Button>
-              <Button vertical>
-                <Icon name="settings" />
-                <Text
-                  onPress={() => navigation.navigate('Login')}>
-                  Option
-                            </Text>
-              </Button>
-            </FooterTab>
-          </Footer>
-        </Container>
+        <Footer >
+          <FooterTab style={{ backgroundColor: '#dfe4ea' }}>
+            <Button vertical onPress={() => this.props.navigate('Home')}>
+              <Icon name="apps" style={{ color: '#192a56' }} />
+              <Text style={{ color: '#192a56' }}>Home</Text>
+            </Button>
+            <Button vertical onPress={() => this.props.navigate('AddProduct')}>
+              <Icon name="add-circle" style={{ color: '#192a56' }} />
+              <Text style={{ color: '#192a56' }}>Add</Text>
+            </Button>
+            <Button vertical onPress={() => this.props.navigate('History')}>
+              <Icon name="podium" style={{ color: '#192a56' }} />
+              <Text style={{ color: '#192a56' }}>History</Text>
+            </Button>
+            <Button vertical onPress={() => this.props.navigate('Login')}>
+              <Icon name="log-out" style={{ color: '#192a56' }} />
+              <Text
+                style={{ color: '#192a56' }}>
+                Logout
+                </Text>
+            </Button>
+          </FooterTab>
+        </Footer>
       </>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  inputSearch: {
-    margin: 15
-  },
-})
