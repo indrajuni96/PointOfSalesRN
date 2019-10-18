@@ -19,6 +19,9 @@ export default class History extends Component {
       count: 0,
       orders: 0,
       resYearIncome: 0,
+      yesterday: 0,
+      weeknow: 0,
+      yearlast: 0
     }
     this.getRecentOrder = this.getRecentOrder.bind(this)
   }
@@ -29,13 +32,18 @@ export default class History extends Component {
   }
 
   getCountOrder = async () => {
+    // axios.get('http://18.232.138.207:4000/api/v1/history/countorder')
     axios.get('http://10.0.2.2:4000/api/v1/history/countorder')
       .then(result => {
         this.setState({
           count: result.data.data[0].daynow,
           orders: result.data.data[0].lastweek,
-          resYearIncome: result.data.data[0].yearnow
+          resYearIncome: result.data.data[0].yearnow,
+          yesterday: result.data.data[0].yesterday,
+          weeknow: result.data.data[0].weeknow,
+          yearlast: result.data.data[0].yearlast
         })
+        console.log(this.state.orders)
       }).catch(err => {
         console.log(err)
       })
@@ -44,12 +52,14 @@ export default class History extends Component {
   getRecentOrder = async (event) => {
     // let data = event.target.value
     let data = 'week'
-    await axios.get('http://10.0.2.2:4000/api/v1/history/recentorder?order=' + data)
+    // await axios.get('http://10.0.2.2:4000/api/v1/history/recentorder?order=' + data)
+    await axios.get('http://18.232.138.207:4000/api/v1/history/recentorder?order=' + data)
       .then(result => {
         this.setState({
           data: result.data.data,
           order: data
         })
+        // console.log(data)
       })
   }
 
@@ -63,6 +73,9 @@ export default class History extends Component {
               style={styles.scrollView}>
 
               <Historys
+                yearlast={this.state.yearlast}
+                weeknow={this.state.weeknow}
+                yesterday={this.state.yesterday}
                 orders={this.state.orders}
                 count={this.state.count}
                 resYearIncome={this.state.resYearIncome}

@@ -28,6 +28,7 @@ export default class Login extends Component {
   loginHandler = async () => {
     const { email, password } = this.state;
     const url = 'http://10.0.2.2:4000/users/login';
+    // const url = 'http://18.232.138.207:4000/users/login';
     const payload = {
       email,
       password,

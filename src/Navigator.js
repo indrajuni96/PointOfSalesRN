@@ -6,7 +6,7 @@ import Register from './Screens/Register'
 import NotFound from './Screens/NotFound'
 import Home from './Screens/Home'
 import History from './Screens/History'
-import AddProduct from './Screens/AddProduct'
+import ManagementProduct from './Screens/ManagementProduct'
 
 const MainNavigator = createStackNavigator({
   Login,
@@ -14,10 +14,10 @@ const MainNavigator = createStackNavigator({
   NotFound,
   Home,
   History,
-  AddProduct
+  ManagementProduct
 }, {
   headerMode: 'none',
-  initialRouteName: 'Home'
+  initialRouteName: 'Login'
 })
 
 export default createAppContainer(MainNavigator)

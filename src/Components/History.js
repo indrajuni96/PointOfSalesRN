@@ -7,8 +7,6 @@ import {
   ScrollView
 } from 'react-native'
 import {
-  Grid,
-  Col,
   List,
   ListItem,
   Body,
@@ -30,10 +28,10 @@ export default class History extends Component {
                 Today's Income
                 </Text>
               <Text style={styles.cardTextRp}>
-                {this.props.count}
+                {convertRupiah.convert(this.props.count)}
               </Text>
               <Text style={styles.cardTextFooter}>
-                +2% Yesterday
+                +{Math.round(((this.props.count - this.props.yesterday) / this.props.yesterday) * 100)}% Yesterday
                 </Text>
             </View>
             <View style={styles.cardItemsOrder}>
@@ -41,10 +39,10 @@ export default class History extends Component {
                 Orders
                 </Text>
               <Text style={styles.cardTextRp}>
-                {this.props.orders}
+                {this.props.data.length}
               </Text>
               <Text style={styles.cardTextFooter}>
-                +5% Last Week
+                {Math.round(((this.props.weeknow - this.props.orders) / this.props.orders) * 100)}% Last Week
                 </Text>
             </View>
             <View style={styles.cardItemsYear}>
@@ -55,7 +53,7 @@ export default class History extends Component {
                 {convertRupiah.convert(this.props.resYearIncome)}
               </Text>
               <Text style={styles.cardTextFooter}>
-                +10% Last Year
+                +{Math.round(((this.props.resYearIncome - this.props.yearlast) / this.props.yearlast) * 100)}% Last Year
                 </Text>
             </View>
           </ScrollView>
@@ -73,10 +71,11 @@ export default class History extends Component {
                       <Body>
                         <Text>{item.invoices}</Text>
                         <Text note numberOfLines={1}>{item.orders}</Text>
+                        <Text>{convertRupiah.convert(item.amount)}</Text>
                       </Body>
                       <Right>
                         <Button transparent>
-                          <Text>View</Text>
+                          <Text>Detail</Text>
                         </Button>
                       </Right>
                     </ListItem>

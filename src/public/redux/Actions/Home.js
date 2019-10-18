@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { BASEURL } from "react-native-dotenv"
 
 export const getHome = options => {
     return {
@@ -9,6 +10,9 @@ export const getHome = options => {
             Axios.get(
                 `http://10.0.2.2:4000/api/v1/products?byProduct=${order}&sort=${sort}&searchByName=${search}&pages=${page}`
             )
+                // Axios.get(
+                //     `${BASEURL}/api/v1/products?byProduct=${order}&sort=${sort}&searchByName=${search}&pages=${page}`
+                // )
                 .then(result => resolve(result))
                 .catch(error => reject(error));
         })

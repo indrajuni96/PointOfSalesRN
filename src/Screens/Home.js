@@ -4,16 +4,12 @@ import {
   View,
   SafeAreaView,
   ScrollView,
-  Image
 } from 'react-native'
 import {
   Icon,
   Text,
   Item,
   Input,
-  Card,
-  CardItem,
-  Body
 } from 'native-base';
 import Footers from '../Components/Footers'
 import CardCategory from '../Components/CardCategory'
@@ -57,14 +53,6 @@ class Home extends Component {
       totalPages: result.value.data.total_pages
     });
     console.log(result)
-    // await axios.get('http://10.0.2.2:4000/api/v1/products')
-    //   .then(result => {
-    //     this.setState({ data: result.data.data })
-    //   })
-    // console.log(this.state.data)
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
   }
 
   render() {
@@ -89,6 +77,9 @@ class Home extends Component {
               </View>
               <View style={styles.containerContent}>
                 <CardCategory />
+                <View style={{ alignItems: 'flex-end' }}>
+                  <Text>show more</Text>
+                </View>
                 <CardItems
                   data={this.state.data}
                 />
@@ -139,7 +130,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
     padding: 10,
-
   },
   contentItems: {
     flex: 1,

@@ -27,7 +27,8 @@ export default class CardItems extends Component {
                     <View style={styles.colCardItemImage}>
                       <Image
                         style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                        source={{ uri: 'http://192.168.1.11:4000/' + item.image }} />
+                        source={{ uri: 'http://192.168.0.116:4000/' + item.image }} />
+                      {/* // source={{ uri: 'http://18.232.138.207:4000/' + item.image }} /> */}
                     </View>
                     <View style={{ flexDirection: 'column', flex: 1 }}>
                       <View style={styles.rowCardItemText}>
@@ -50,7 +51,6 @@ export default class CardItems extends Component {
                         </View>
                       </View>
                     </View>
-
                   </View>
                 )
               })}
@@ -79,12 +79,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 3,
-    // },
-    // shadowOpacity: 0.29,
-    // shadowRadius: 4.65,
     elevation: 5,
   },
   colCardItemImage: {

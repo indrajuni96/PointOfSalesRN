@@ -14,12 +14,12 @@ export default class Footers extends Component {
         <Footer >
           <FooterTab style={{ backgroundColor: '#dfe4ea' }}>
             <Button vertical onPress={() => this.props.navigate('Home')}>
-              <Icon name="apps" style={{ color: '#192a56' }} />
+              <Icon name="ios-home" style={{ color: '#192a56' }} />
               <Text style={{ color: '#192a56' }}>Home</Text>
             </Button>
-            <Button vertical onPress={() => this.props.navigate('AddProduct')}>
-              <Icon name="add-circle" style={{ color: '#192a56' }} />
-              <Text style={{ color: '#192a56' }}>Add</Text>
+            <Button vertical onPress={() => this.props.navigate('ManagementProduct')}>
+              <Icon name="apps" style={{ color: '#192a56' }} />
+              <Text style={{ color: '#192a56' }}>Product</Text>
             </Button>
             <Button vertical onPress={() => this.props.navigate('History')}>
               <Icon name="podium" style={{ color: '#192a56' }} />
